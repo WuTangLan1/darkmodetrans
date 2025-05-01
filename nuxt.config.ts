@@ -1,12 +1,9 @@
-// nuxt.config.ts
-export default defineNuxtConfig({
+ // nuxt.config.ts
+ export default defineNuxtConfig({
   compatibilityDate: '2025-05-01',
   modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/content'
+    '@nuxtjs/tailwindcss'
   ],
-  content: {},
-
   css: ['~/assets/css/tailwind.css'],
   tailwindcss: {
     configPath: 'tailwind.config.ts',
