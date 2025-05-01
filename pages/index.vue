@@ -16,47 +16,36 @@
       </NuxtLink>
     </div>
 
-    <div v-if="posts?.length" class="container mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-        Latest Posts
-      </h2>
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <ContentList
+      path="blog"
+      :limit="3"
+      sortKey="publishedAt"
+      sortOrder="desc"
+      class="container mx-auto px-4 py-12"
+    >
+      <template #default="{ item }">
         <NuxtLink
-          v-for="post in posts"
-          :key="post._path"
-          :to="post._path"
+          :to="item._path"
           class="block bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
         >
           <div class="p-6">
             <h3 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
-              {{ post.title }}
+              {{ item.title }}
             </h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              {{ new Date(post.publishedAt).toLocaleDateString() }}
+              {{ new Date(item.publishedAt).toLocaleDateString() }}
             </p>
-            <p class="text-gray-700 dark:text-gray-300">{{ post.excerpt }}</p>
+            <p class="text-gray-700 dark:text-gray-300">
+              {{ item.excerpt }}
+            </p>
           </div>
         </NuxtLink>
-      </div>
-    </div>
-
-    <p
-      v-else
-      class="text-center py-12 text-gray-500 dark:text-gray-400"
-    >
-      No posts found — check back soon!
-    </p>
+      </template>
+      <template #empty>
+        <p class="text-center py-12 text-gray-500 dark:text-gray-400">
+          No posts found — check back soon!
+        </p>
+      </template>
+    </ContentList>
   </section>
 </template>
-
-<script setup lang="ts">
-import { useAsyncData } from '#app'
-import { queryContent } from '#content'
-
-const { data: posts } = await useAsyncData('latest-posts', () =>
-  queryContent('blog')
-    .sort({ publishedAt: -1 })
-    .limit(3)
-    .find()
-)
-</script>
