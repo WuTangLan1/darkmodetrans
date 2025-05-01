@@ -1,7 +1,7 @@
  <!-- pages/index.vue -->
  <script setup lang="ts">
  import { posts as all } from '@/composables/usePosts'
- const posts = all.slice(0, 3)
+ 
  </script>
 
  <template>
@@ -9,7 +9,6 @@
      <div class="container mx-auto px-4 py-16 text-center">
        <h1 class="text-5xl font-extrabold mb-4 text-gray-900 dark:text-gray-100">Ultimate Fighting Championship Insights</h1>
        <p class="text-xl text-gray-700 dark:text-gray-300 mb-12">Dive into the latest news, history, and analysis from the world of UFC.</p>
-       <NuxtLink to="/blog" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">Visit Blog</NuxtLink>
      </div>
 
      <div v-if="posts.length" class="container mx-auto px-4 py-12">
