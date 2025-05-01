@@ -1,4 +1,16 @@
 <!-- pages/index.vue -->
+
+<script setup lang="ts">
+import { useAsyncData } from '#app'
+
+const { data: posts } = await useAsyncData('latest-posts', () =>
+  queryContent('blog')          
+    .sort({ publishedAt: -1 })
+    .limit(3)
+    .find()
+)
+</script>
+
 <template>
     <section class="bg-gray-100 dark:bg-gray-900 min-h-screen">
       <div class="container mx-auto px-4 py-16 text-center">
@@ -24,17 +36,6 @@
         </div>
       </div>
     </section>
-  </template>
+</template>
   
-  <script setup lang="ts">
-  import { useAsyncData } from '#app'
-  import { queryContent } from '#content'
-  
-  const { data: posts } = await useAsyncData('latest-posts', () =>
-    queryContent('blog')
-      .sort({ publishedAt: -1 })
-      .limit(3)
-      .find()
-  )
-  </script>
   
