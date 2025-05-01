@@ -1,4 +1,12 @@
 <!-- pages/blog/index.vue -->
+<script setup lang="ts">
+import { useAsyncData } from '#app'
+
+const { data: posts } = await useAsyncData('posts', () =>
+  queryContent('blog').sort({ publishedAt: -1 }).find()
+)
+</script>
+
 <template>
     <section class="container mx-auto px-4 py-8">
       <h1 class="text-4xl font-bold mb-8">UFC Blog</h1>
@@ -17,16 +25,6 @@
         </nuxt-link>
       </div>
     </section>
-  </template>
-  
-  <script setup lang="ts">
-  import { useAsyncData } from '#app'
-  import { queryContent } from '#content'
-  
-  const { data: posts } = await useAsyncData('posts', () =>
-    queryContent('blog')
-      .sort({ publishedAt: -1 })
-      .find()
-  )
-  </script>
+</template>
+
   
