@@ -1,0 +1,19 @@
+/* assets\css\tailwind.css */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: white;
+  --fg: #111827;
+}
+.dark {
+  --bg: #111827;
+  --fg: white;
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
