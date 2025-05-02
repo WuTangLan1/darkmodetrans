@@ -1,4 +1,5 @@
 <script setup lang="ts">
+definePageMeta({})
 import { onMounted } from 'vue'
 import { posts as all } from '@/composables/usePosts'
 import { isDark, toggleThemeWithOverlay, initColorMode } from '@/composables/useThemeToggle'
@@ -7,6 +8,11 @@ onMounted(initColorMode)
 </script>
 
 <template>
+  <header class="sticky top-0 z-50 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-hover)] text-[var(--btn-text)]">
+    <div class="container mx-auto px-4 py-4">
+      <h1 class="text-center text-2xl font-bold">TailwindCSS Theme Transitions</h1>
+    </div>
+  </header>
   <section class="pt-20 min-h-screen">
     <div class="container mx-auto px-4 py-16 text-center">
       <h1 class="text-5xl font-extrabold mb-4">The Ultimate Guide for Theme Transitions with TailwindCSS</h1>
