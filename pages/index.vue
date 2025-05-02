@@ -1,4 +1,3 @@
-<!-- pages/index.vue -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { posts as all } from '@/composables/usePosts'
@@ -17,12 +16,12 @@ onMounted(initColorMode)
       </p>
       <button
         @click="toggleThemeWithOverlay($event)"
-        class="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold rounded-lg"
+        class="inline-flex items-center justify-center w-14 h-14 p-3 rounded-full"
       >
         <svg
           v-if="isDark"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-8 h-8"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -37,7 +36,7 @@ onMounted(initColorMode)
         <svg
           v-else
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-8 h-8"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -49,8 +48,8 @@ onMounted(initColorMode)
             d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
           />
         </svg>
-        <span class="ml-2">{{ isDark ? 'Light Mode' : 'Dark Mode' }}</span>
       </button>
+
     </div>
 
     <div v-if="posts.length" class="container mx-auto px-4 py-12">
