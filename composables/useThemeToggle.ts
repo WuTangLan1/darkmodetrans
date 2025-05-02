@@ -1,65 +1,68 @@
-// composables\useThemeToggle.ts
-
 import { ref } from 'vue'
 
 export const isDark = ref(false)
 
+function setMode(el: HTMLElement, dark: boolean) {
+  el.classList.toggle('dark', dark)
+  el.classList.toggle('light', !dark)
+}
+
+function freeze() {
+  const s = document.createElement('style')
+  s.textContent = '*{transition:none!important}'
+  document.head.appendChild(s)
+  return () => s.remove()
+}
+
 export function initColorMode() {
   if (typeof window === 'undefined') return
+  const html = document.documentElement
   const root = document.getElementById('__nuxt')
   if (!root) return
   const stored = localStorage.getItem('color-mode')
-  if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    root.classList.add('dark')
-    isDark.value = true
-  } else {
-    root.classList.remove('dark')
-    isDark.value = false
-  }
+  const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+  setMode(html, dark)
+  setMode(root, dark)
+  isDark.value = dark
 }
 
 export function toggleThemeWithOverlay(ev: MouseEvent) {
   const root = document.getElementById('__nuxt')
+  const html = document.documentElement
   if (!root || !ev.currentTarget) return
-  const newDark = !isDark.value
+
+  const toDark = !isDark.value
   const btn = ev.currentTarget as HTMLElement
-  const rect = btn.getBoundingClientRect()
-  const cx = rect.left + rect.width / 2
-  const cy = rect.top + rect.height / 2
-  const dx = Math.max(cx, window.innerWidth - cx)
-  const dy = Math.max(cy, window.innerHeight - cy)
-  const r = Math.hypot(dx, dy)
+  const { left, top, width, height } = btn.getBoundingClientRect()
+  const cx = left + width / 2
+  const cy = top + height / 2
+  const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
+
   const overlay = root.cloneNode(true) as HTMLElement
-  const scrollY = window.scrollY
-  overlay.style.transform = `translateY(-${scrollY}px)`
-  const first = overlay.firstElementChild as HTMLElement | null
-  if (first) first.scrollTop = scrollY
+  const y = scrollY
+  overlay.style.transform = `translateY(-${y}px)`
+  ;(overlay.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   overlay.id = 'nuxt-theme-overlay'
-  overlay.style.position = 'fixed'
-  overlay.style.inset = '0'
-  overlay.style.pointerEvents = 'none'
-  overlay.style.zIndex = '9999'
-  overlay.style.clipPath = `circle(0px at ${cx}px ${cy}px)`
-  overlay.style.transition = 'clip-path 0.6s ease-out'
-  overlay.querySelectorAll('*').forEach(el => (el as HTMLElement).style.transition = 'none')
-  if (newDark) overlay.classList.add('dark')
-  else overlay.classList.remove('dark')
+  overlay.style.cssText += `position:fixed;inset:0;pointer-events:none;z-index:9999;
+    clip-path:circle(0 at ${cx}px ${cy}px);transition:clip-path .6s ease-out`
+  overlay.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
+  setMode(overlay, toDark)
+  overlay.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
+  overlay.style.color = 'var(--fg)'
+
   document.body.appendChild(overlay)
   overlay.getBoundingClientRect()
-  requestAnimationFrame(() => {
-    overlay.style.clipPath = `circle(${r}px at ${cx}px ${cy}px)`
-  })
+  requestAnimationFrame(() => (overlay.style.clipPath = `circle(${r}px at ${cx}px ${cy}px)`))
+
   overlay.addEventListener(
     'transitionend',
     () => {
-      if (newDark) {
-        root.classList.add('dark')
-        localStorage.setItem('color-mode', 'dark')
-      } else {
-        root.classList.remove('dark')
-        localStorage.setItem('color-mode', 'light')
-      }
-      isDark.value = newDark
+      const unfreeze = freeze()
+      setMode(html, toDark)
+      setMode(root, toDark)
+      localStorage.setItem('color-mode', toDark ? 'dark' : 'light')
+      isDark.value = toDark
+      unfreeze()
       overlay.remove()
     },
     { once: true }
