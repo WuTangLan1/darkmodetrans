@@ -19,31 +19,49 @@ onMounted(initColorMode)
       <p class="text-xl mb-12">This website provides substantial value for different theme transitions to enhance the UX</p>
         <!-- Add this around your theme‐toggle button in pages/index.vue -->
         <div class="container mx-auto px-4 py-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Circular Theme Transition -->
-            <div class="flex flex-col items-center space-y-4">
-              <span class="font-medium">Circular Theme Transition</span>
-              <button @click="toggleThemeWithCircle($event)" class="btn-theme-toggle">
-                <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"/>
-                </svg>
-                <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
-                </svg>
-              </button>
-            </div>
-            <!-- Expanding Diamond (Rotated Square) Reveal -->
-            <div class="flex flex-col items-center space-y-4">
-              <span class="font-medium">Expanding Diamond (Rotated Square) Reveal</span>
-              <button @click="toggleThemeWithDiamond($event)" class="btn-theme-toggle">
-                <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"/>
-                </svg>
-                <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
-                </svg>
-              </button>
-            </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Circular Theme Transition -->
+          <div class="flex flex-col items-center space-y-4">
+            <span class="font-medium">Circular Theme Transition</span>
+            <button @click="toggleThemeWithCircle($event)" class="btn-theme-toggle">
+              <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Expanding Diamond (Rotated Square) Reveal -->
+          <div class="flex flex-col items-center space-y-4">
+            <span class="font-medium">Expanding Diamond (Rotated Square) Reveal</span>
+            <button @click="toggleThemeWithDiamond($event)" class="btn-theme-toggle">
+              <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Multi-Ring “Ripple” Expansion -->
+          <div class="flex flex-col items-center space-y-4">
+            <span class="font-medium">Multi-Ring “Ripple” Expansion</span>
+            <button @click="toggleThemeWithRipple($event)" class="btn-theme-toggle">
+              <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414m12.728 0l-1.414-1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+              </svg>
+            </button>
+          </div>
           </div>
         </div>
     </div>
