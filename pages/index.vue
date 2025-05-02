@@ -128,7 +128,7 @@ onMounted(initColorMode)
 
         </div>
       </div>
-      <h1 class="text-5xl font-extrabold mt-4">The Ultimate Guide for Theme Transitions with TailwindCSS</h1>
+      <h1 class="text-5xl font-extrabold my-4">The Ultimate Guide for Theme Transitions with TailwindCSS</h1>
       <p class="text-xl mb-12">This website provides substantial value for different theme transitions to enhance the UX</p>
     </div>
 
