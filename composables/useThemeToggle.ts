@@ -8,12 +8,20 @@ function setMode(e: HTMLElement, d: boolean) {
   e.classList.toggle('dark', d)
   e.classList.toggle('light', !d)
 }
+
+function applyThemeToClone(el: HTMLElement, dark: boolean) {
+  setMode(el, dark)
+  const inner = el.querySelector('#__nuxt') as HTMLElement | null
+  if (inner) setMode(inner, dark)
+}
+
 function freeze() {
   const s = document.createElement('style')
   s.textContent = '*{transition:none!important}'
   document.head.appendChild(s)
   return () => s.remove()
 }
+
 export function initColorMode() {
   if (typeof window === 'undefined') return
   const h = document.documentElement
@@ -25,6 +33,7 @@ export function initColorMode() {
   setMode(r, d)
   isDark.value = d
 }
+
 function baseOverlay(btn: HTMLElement) {
   const r = document.getElementById('__nuxt') as HTMLElement
   const o = r.cloneNode(true) as HTMLElement
@@ -35,11 +44,11 @@ function baseOverlay(btn: HTMLElement) {
   o.style.transform = `translateY(-${y}px)`
   ;(o.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   o.id = 'nuxt-theme-overlay'
-  o.querySelectorAll('img').forEach(i => ((i as HTMLElement).style.opacity = '1'))
   o.style.cssText += 'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path 1.2s cubic-bezier(.22,1,.36,1)'
   o.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
   return { o, cx, cy }
 }
+
 function finish(o: HTMLElement, tgt: boolean) {
   const h = document.documentElement
   const r = document.getElementById('__nuxt') as HTMLElement
@@ -51,11 +60,12 @@ function finish(o: HTMLElement, tgt: boolean) {
   o.remove()
   un()
 }
+
 export function toggleThemeWithCircle(ev: MouseEvent) {
   const btn = ev.currentTarget as HTMLElement
   const { o, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
-  setMode(o, tgt)
+  applyThemeToClone(o, tgt)
   const rad = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
   o.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
   o.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
@@ -65,17 +75,15 @@ export function toggleThemeWithCircle(ev: MouseEvent) {
   requestAnimationFrame(() => (o.style.clipPath = `circle(${rad}px at ${cx}px ${cy}px)`))
   o.addEventListener('transitionend', () => finish(o, tgt), { once: true })
 }
+
 export function toggleThemeWithDiamond(ev: MouseEvent) {
   const btn = ev.currentTarget as HTMLElement
   const { o, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
-  setMode(o, tgt)
-
-  const diag = Math.hypot(innerWidth, innerHeight)
-  const d = diag
+  applyThemeToClone(o, tgt)
+  const d = Math.hypot(innerWidth, innerHeight)
   const s = `${cx}px ${cy}px`
   const e = `${cx}px ${cy - d}px, ${cx + d}px ${cy}px, ${cx}px ${cy + d}px, ${cx - d}px ${cy}px`
-
   o.style.clipPath = `polygon(${s},${s},${s},${s})`
   o.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
   o.style.color = 'var(--fg)'
@@ -84,11 +92,12 @@ export function toggleThemeWithDiamond(ev: MouseEvent) {
   requestAnimationFrame(() => (o.style.clipPath = `polygon(${e})`))
   o.addEventListener('transitionend', () => finish(o, tgt), { once: true })
 }
+
 export function toggleThemeWithRipple(ev: MouseEvent) {
   const btn = ev.currentTarget as HTMLElement
   const { o: core, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
-  setMode(core, tgt)
+  applyThemeToClone(core, tgt)
   const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
   core.style.transition = 'clip-path 1.4s cubic-bezier(.22,1,.36,1)'
   core.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
@@ -100,10 +109,7 @@ export function toggleThemeWithRipple(ev: MouseEvent) {
     const ring = document.createElement('div')
     const delay = i * 0.15
     const size = r * 2 + i * 120
-    ring.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;
-      margin-left:-${size / 2}px;margin-top:-${size / 2}px;border-radius:50%;
-      border:${4 - i}px solid var(--accent);opacity:.5;pointer-events:none;z-index:9998;
-      transform:scale(0);transition:transform 1.4s ${delay}s cubic-bezier(.22,1,.36,1),opacity 1.4s ${delay}s`
+    ring.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;margin-left:-${size / 2}px;margin-top:-${size / 2}px;border-radius:50%;border:${4 - i}px solid var(--accent);opacity:.5;pointer-events:none;z-index:9998;transform:scale(0);transition:transform 1.4s ${delay}s cubic-bezier(.22,1,.36,1),opacity 1.4s ${delay}s`
     if (i === 1) ring.style.borderColor = 'var(--accent-hover)'
     if (i === 2) ring.style.borderColor = 'var(--btn-bg-hover)'
     rings.push(ring)
@@ -118,14 +124,8 @@ export function toggleThemeWithRipple(ev: MouseEvent) {
       ring.style.opacity = '0'
     })
   })
-  core.addEventListener(
-    'transitionend',
-    () => {
-      rings.forEach(ring =>
-        ring.addEventListener('transitionend', () => ring.remove(), { once: true })
-      )
-      finish(core, tgt)
-    },
-    { once: true }
-  )
+  core.addEventListener('transitionend', () => {
+    rings.forEach(ring => ring.addEventListener('transitionend', () => ring.remove(), { once: true }))
+    finish(core, tgt)
+  }, { once: true })
 }

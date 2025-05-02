@@ -134,20 +134,21 @@ onMounted(initColorMode)
 
     <div v-if="posts.length" class="container mx-auto px-4 py-12">
       <h2
-          class="flex items-center justify-center gap-2 text-3xl md:text-5xl font-heading font-extrabold mb-8 text-center
-                bg-gradient-to-r from-purple-400 via-pink-500 to-red-500
+          class="flex flex-col sm:flex-row items-center justify-center gap-2 
+                text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold mb-8 
+                bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 
                 bg-clip-text text-transparent uppercase tracking-wide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-12 h-12 flex-shrink-0"
+            class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex-shrink-0"
             viewBox="0 0 20 20"
           >
             <defs>
               <linearGradient id="headingGrad" x1="0%" y1="50%" x2="100%" y2="50%">
-                <stop offset="0%"   stop-color="#a78bfa"/>  <!-- purple-400 -->
-                <stop offset="50%"  stop-color="#ec4899"/>  <!-- pink-500 -->
-                <stop offset="100%" stop-color="#f43f5e"/>  <!-- red-500 -->
+                <stop offset="0%"   stop-color="#a78bfa"/>
+                <stop offset="50%"  stop-color="#ec4899"/>
+                <stop offset="100%" stop-color="#f43f5e"/>
               </linearGradient>
             </defs>
             <path
@@ -155,9 +156,8 @@ onMounted(initColorMode)
               d="M8 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V6l-4-4H8zm1 2h4v3h3v9H9V4zm1 5h3v1H10V9zm0 2h3v1H10v-1z"
             />
           </svg>
-          Here are the docs..
-        </h2>
-
+          <span>Here are the docs..</span>
+      </h2>
 
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div
