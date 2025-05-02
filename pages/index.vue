@@ -1,5 +1,4 @@
 <!-- pages/index.vue -->
-
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { posts as all } from '@/composables/usePosts'
@@ -22,23 +21,48 @@ onMounted(initColorMode)
     <div v-if="posts.length" class="container mx-auto px-4 py-12">
       <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Latest Posts</h2>
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <NuxtLink v-for="post in posts" :key="post.slug" :to="`/blog/${post.slug}`" class="group block rounded-xl overflow-hidden shadow-lg hover:shadow-2xl bg-white dark:bg-gray-800">
+        <div
+          v-for="post in posts"
+          :key="post.slug"
+          class="group relative flex flex-col h-full rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 shimmer-card"
+        >
           <div class="h-48 overflow-hidden">
-            <img src="/media/blog-header/lighttheme.webp" class="w-full h-full object-cover transform block dark:hidden"/>
-            <img src="/media/blog-header/darktheme.webp"  class="w-full h-full object-cover transform hidden dark:block"/>
+            <img src="/media/blog-header/lighttheme.webp" class="w-full h-full object-cover block dark:hidden" alt="" />
+            <img src="/media/blog-header/darktheme.webp"  class="w-full h-full object-cover hidden dark:block" alt="" />
           </div>
-          <div class="p-6 flex flex-col">
+          <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{{ post.title }}</h3>
             <p class="text-gray-700 dark:text-gray-300 flex-1">{{ post.excerpt }}</p>
-            <div class="mt-4 text-blue-600 dark:text-blue-400 font-semibold flex items-center group-hover:translate-x-1">
-              Read more
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </div>
           </div>
-        </NuxtLink>
+        </div>
       </div>
     </div>
 
     <p v-else class="text-center py-12 text-gray-500 dark:text-gray-400">No posts found — check back soon!</p>
   </section>
 </template>
+
+<style scoped>
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.shimmer-card:hover::before {
+  opacity: 1;
+  animation: shimmer 1.2s infinite;
+}
+</style>
