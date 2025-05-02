@@ -1,6 +1,5 @@
 <!-- pages/index.vue -->
 
-
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { posts as all } from '@/composables/usePosts'
@@ -25,15 +24,8 @@ onMounted(initColorMode)
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <NuxtLink v-for="post in posts" :key="post.slug" :to="`/blog/${post.slug}`" class="group block rounded-xl overflow-hidden shadow-lg hover:shadow-2xl bg-white dark:bg-gray-800">
           <div class="h-48 overflow-hidden">
-            <div class="h-48 overflow-hidden">
-              <img
-                :src="isDark
-                  ? '/media/blog-header/darktheme.webp'
-                  : '/media/blog-header/lighttheme.webp'"
-                alt="Blog header image"
-                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-              />
-            </div>
+            <img src="/media/blog-header/lighttheme.webp" class="w-full h-full object-cover transform block dark:hidden"/>
+            <img src="/media/blog-header/darktheme.webp"  class="w-full h-full object-cover transform hidden dark:block"/>
           </div>
           <div class="p-6 flex flex-col">
             <h3 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{{ post.title }}</h3>
