@@ -140,7 +140,7 @@ onMounted(initColorMode)
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex-shrink-0"
+            class="w-16 h-16 flex-shrink-0"
             viewBox="0 0 20 20"
           >
             <defs>
@@ -197,9 +197,14 @@ onMounted(initColorMode)
   0% { background-position: -200% 0 }
   100% { background-position: 200% 0 }
 }
+.shimmer-card {
+  position: relative; 
+  z-index: 0;
+}
 .shimmer-card::before {
   content: '';
   position: absolute;
+  pointer-events: none;
   inset: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
   background-size: 200% 100%;
