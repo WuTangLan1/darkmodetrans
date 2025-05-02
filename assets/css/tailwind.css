@@ -44,10 +44,24 @@ body{
 @layer components{
   .btn-primary{@apply px-4 py-2 rounded-lg font-semibold;text-shadow:0 1px 1px rgba(0,0,0,.1);background-color:var(--btn-bg);color:var(--btn-text)}
   .btn-primary:hover{background-color:var(--btn-bg-hover)}
-  .card{@apply rounded-xl shadow-lg;background-color:var(--card-bg);box-shadow:0 4px 6px -1px var(--card-shadow),0 2px 4px -2px var(--card-shadow)}
-  .card:hover{background-color:var(--card-bg-hover);box-shadow:0 10px 15px -3px var(--card-shadow),0 4px 6px -4px var(--card-shadow)}
+  .card {
+    @apply rounded-xl shadow-lg transform transition duration-300;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 6px -1px var(--card-shadow), 0 2px 4px -2px var(--card-shadow);
+  }
+  .card:hover {
+    @apply -translate-y-1 shadow-2xl;
+    background-color: var(--card-bg-hover);
+    box-shadow: 0 10px 15px -3px var(--card-shadow), 0 4px 6px -4px var(--card-shadow);
+  }
   h1,h2,h3,h4,h5,h6{color:var(--fg)}
-  .btn-theme-toggle{@apply inline-flex items-center justify-center w-14 h-14 p-3 rounded-full bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-hover)] text-[var(--btn-text)] shadow-lg transition duration-300}
-  .btn-theme-toggle:hover{@apply shadow-2xl}
+  .btn-theme-toggle {
+    @apply inline-flex items-center justify-center w-14 h-14 p-3 rounded-full
+           bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-hover)]
+           text-[var(--btn-text)] shadow-lg transform transition duration-300;
+  }
+  .btn-theme-toggle:hover {
+    @apply shadow-2xl -translate-y-1;
+  }
   code{@apply px-1 rounded bg-gray-100 dark:bg-gray-800}
 }

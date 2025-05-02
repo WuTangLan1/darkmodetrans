@@ -3,7 +3,6 @@ import { onMounted } from 'vue'
 import { posts as all } from '@/composables/usePosts'
 import { isDark, toggleThemeWithOverlay, initColorMode } from '@/composables/useThemeToggle'
 
-const posts = all.slice(0, 3)
 onMounted(initColorMode)
 </script>
 
