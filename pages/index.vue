@@ -175,6 +175,14 @@ onMounted(initColorMode)
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-2xl font-semibold mb-2">{{ post.title }}</h3>
             <p class="flex-1">{{ post.excerpt }}</p>
+            <div class="mt-4">
+              <NuxtLink
+                :to="`/docs/${post.slug}`"
+                class="text-blue-600 dark:text-blue-400 font-semibold hover:underline mt-4"
+              >
+                Read more →
+              </NuxtLink>
+            </div>
           </div>
         </div>
       </div>
