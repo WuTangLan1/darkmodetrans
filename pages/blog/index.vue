@@ -11,7 +11,7 @@ import { posts } from '@/composables/usePosts'
         v-for="post in posts"
         :key="post.slug"
         :to="`/blog/${post.slug}`"
-        class="group block flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-800"
+        class="group flex flex-col h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-800"
       >
         <div class="h-48 overflow-hidden">
           <img

@@ -30,6 +30,10 @@ export function toggleThemeWithOverlay(ev: MouseEvent) {
   const dy = Math.max(cy, window.innerHeight - cy)
   const r = Math.hypot(dx, dy)
   const overlay = root.cloneNode(true) as HTMLElement
+  const scrollY = window.scrollY
+  overlay.style.transform = `translateY(-${scrollY}px)`
+  const first = overlay.firstElementChild as HTMLElement | null
+  if (first) first.scrollTop = scrollY
   overlay.id = 'nuxt-theme-overlay'
   overlay.style.position = 'fixed'
   overlay.style.inset = '0'
