@@ -208,6 +208,6 @@ onMounted(initColorMode)
 }
 .shimmer-card:hover::before {
   opacity: 1;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer 1.2s linear;
 }
 </style>
