@@ -135,8 +135,7 @@ onMounted(initColorMode)
     <div v-if="posts.length" class="container mx-auto px-4 py-12">
       <h2
           class="flex flex-col sm:flex-row items-center justify-center gap-2 
-                text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold mb-8 
-                uppercase tracking-wide"
+                text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold mb-8 tracking-wide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
