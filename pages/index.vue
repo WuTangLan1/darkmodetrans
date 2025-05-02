@@ -26,8 +26,8 @@ onMounted(initColorMode)
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div v-for="post in posts" :key="post.slug" class="group relative flex flex-col rounded-xl overflow-hidden card shimmer-card">
           <div class="h-48 overflow-hidden">
-            <img src="/media/blog-header/lighttheme.webp" class="w-full h-full object-cover block dark:hidden" alt="" />
-            <img src="/media/blog-header/darktheme.webp" class="w-full h-full object-cover hidden dark:block" alt="" />
+            <img src="/media/blog-header/lighttheme.webp" class="w-full h-full object-cover block dark:hidden"/>
+            <img src="/media/blog-header/darktheme.webp" class="w-full h-full object-cover hidden dark:block"/>
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-2xl font-semibold mb-2">{{ post.title }}</h3>

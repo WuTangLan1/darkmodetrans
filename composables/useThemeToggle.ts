@@ -1,3 +1,5 @@
+// composables/useThemeToggle.ts
+
 import { ref } from 'vue'
 
 export const isDark = ref(false)
@@ -7,11 +9,12 @@ function setMode(el: HTMLElement, dark: boolean) {
   el.classList.toggle('light', !dark)
 }
 
-function freeze() {
+function freezeAll() {
   const s = document.createElement('style')
+  s.id = '__no-transitions'
   s.textContent = '*{transition:none!important}'
   document.head.appendChild(s)
-  return () => s.remove()
+  return () => document.head.removeChild(s)
 }
 
 export function initColorMode() {
@@ -20,7 +23,9 @@ export function initColorMode() {
   const root = document.getElementById('__nuxt')
   if (!root) return
   const stored = localStorage.getItem('color-mode')
-  const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+  const dark = stored
+    ? stored === 'dark'
+    : matchMedia('(prefers-color-scheme: dark)').matches
   setMode(html, dark)
   setMode(root, dark)
   isDark.value = dark
@@ -31,7 +36,7 @@ export function toggleThemeWithOverlay(ev: MouseEvent) {
   const html = document.documentElement
   if (!root || !ev.currentTarget) return
 
-  const toDark = !isDark.value
+  const targetDark = !isDark.value
   const btn = ev.currentTarget as HTMLElement
   const { left, top, width, height } = btn.getBoundingClientRect()
   const cx = left + width / 2
@@ -39,14 +44,20 @@ export function toggleThemeWithOverlay(ev: MouseEvent) {
   const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
 
   const overlay = root.cloneNode(true) as HTMLElement
-  const y = scrollY
+  const y = window.scrollY
   overlay.style.transform = `translateY(-${y}px)`
   ;(overlay.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   overlay.id = 'nuxt-theme-overlay'
-  overlay.style.cssText += `position:fixed;inset:0;pointer-events:none;z-index:9999;
-    clip-path:circle(0 at ${cx}px ${cy}px);transition:clip-path .6s ease-out`
-  overlay.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
-  setMode(overlay, toDark)
+  overlay.style.cssText += `
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    clip-path:circle(0 at ${cx}px ${cy}px);
+    transition:clip-path .6s ease-out;
+  `
+  overlay.querySelectorAll('*').forEach(el => ((el as HTMLElement).style.transition = 'none'))
+  setMode(overlay, targetDark)
   overlay.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
   overlay.style.color = 'var(--fg)'
 
@@ -57,13 +68,13 @@ export function toggleThemeWithOverlay(ev: MouseEvent) {
   overlay.addEventListener(
     'transitionend',
     () => {
-      const unfreeze = freeze()
-      setMode(html, toDark)
-      setMode(root, toDark)
-      localStorage.setItem('color-mode', toDark ? 'dark' : 'light')
-      isDark.value = toDark
-      unfreeze()
+      const unfreeze = freezeAll()
+      setMode(html, targetDark)
+      setMode(root, targetDark)
+      localStorage.setItem('color-mode', targetDark ? 'dark' : 'light')
+      isDark.value = targetDark
       overlay.remove()
+      unfreeze()
     },
     { once: true }
   )

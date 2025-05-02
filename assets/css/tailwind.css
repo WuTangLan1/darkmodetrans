@@ -45,7 +45,7 @@ body{
   .btn-primary{@apply px-4 py-2 rounded-lg font-semibold;text-shadow:0 1px 1px rgba(0,0,0,.1);background-color:var(--btn-bg);color:var(--btn-text)}
   .btn-primary:hover{background-color:var(--btn-bg-hover)}
   .card {
-    @apply rounded-xl shadow-lg transform transition duration-300;
+    @apply rounded-xl shadow-lg;
     background-color: var(--card-bg);
     box-shadow: 0 4px 6px -1px var(--card-shadow), 0 2px 4px -2px var(--card-shadow);
   }
