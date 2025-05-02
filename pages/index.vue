@@ -136,8 +136,7 @@ onMounted(initColorMode)
       <h2
           class="flex flex-col sm:flex-row items-center justify-center gap-2 
                 text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold mb-8 
-                bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 
-                bg-clip-text text-transparent uppercase tracking-wide"
+                uppercase tracking-wide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
