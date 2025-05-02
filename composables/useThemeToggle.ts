@@ -35,7 +35,8 @@ function baseOverlay(btn: HTMLElement) {
   o.style.transform = `translateY(-${y}px)`
   ;(o.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   o.id = 'nuxt-theme-overlay'
-  o.style.cssText += `position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path .6s ease-out`
+  o.style.cssText +=
+    'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path .6s ease-out'
   o.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
   return { r, o, cx, cy }
 }
@@ -52,31 +53,60 @@ function finish(o: HTMLElement, tgt: boolean) {
 }
 export function toggleThemeWithCircle(ev: MouseEvent) {
   const btn = ev.currentTarget as HTMLElement
-  const { r: root, o: overlay, cx, cy } = baseOverlay(btn)
+  const { o, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
-  setMode(overlay, tgt)
+  setMode(o, tgt)
   const rad = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
-  overlay.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
-  overlay.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
-  overlay.style.color = 'var(--fg)'
-  document.body.appendChild(overlay)
-  overlay.getBoundingClientRect()
-  requestAnimationFrame(() => (overlay.style.clipPath = `circle(${rad}px at ${cx}px ${cy}px)`))
-  overlay.addEventListener('transitionend', () => finish(overlay, tgt), { once: true })
+  o.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
+  o.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
+  o.style.color = 'var(--fg)'
+  document.body.appendChild(o)
+  o.getBoundingClientRect()
+  requestAnimationFrame(() => (o.style.clipPath = `circle(${rad}px at ${cx}px ${cy}px)`))
+  o.addEventListener('transitionend', () => finish(o, tgt), { once: true })
 }
 export function toggleThemeWithDiamond(ev: MouseEvent) {
   const btn = ev.currentTarget as HTMLElement
-  const { o: overlay, cx, cy } = baseOverlay(btn)
+  const { o, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
-  setMode(overlay, tgt)
+  setMode(o, tgt)
   const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
   const start = `${cx}px ${cy}px`
   const end = `${cx}px ${cy - r}px, ${cx + r}px ${cy}px, ${cx}px ${cy + r}px, ${cx - r}px ${cy}px`
-  overlay.style.clipPath = `polygon(${start},${start},${start},${start})`
-  overlay.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
-  overlay.style.color = 'var(--fg)'
-  document.body.appendChild(overlay)
-  overlay.getBoundingClientRect()
-  requestAnimationFrame(() => (overlay.style.clipPath = `polygon(${end})`))
-  overlay.addEventListener('transitionend', () => finish(overlay, tgt), { once: true })
+  o.style.clipPath = `polygon(${start},${start},${start},${start})`
+  o.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
+  o.style.color = 'var(--fg)'
+  document.body.appendChild(o)
+  o.getBoundingClientRect()
+  requestAnimationFrame(() => (o.style.clipPath = `polygon(${end})`))
+  o.addEventListener('transitionend', () => finish(o, tgt), { once: true })
+}
+export function toggleThemeWithRipple(ev: MouseEvent) {
+  const btn = ev.currentTarget as HTMLElement
+  const { o: inner, cx, cy } = baseOverlay(btn)
+  const tgt = !isDark.value
+  setMode(inner, tgt)
+  const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
+  inner.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
+  inner.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
+  inner.style.color = 'var(--fg)'
+  const outer = document.createElement('div')
+  outer.style.cssText = `position:fixed;inset:0;pointer-events:none;z-index:9998;
+    clip-path:circle(0 at ${cx}px ${cy}px);transition:clip-path .8s ease-out;
+    background:linear-gradient(135deg,var(--bg-start),var(--bg-end))`
+  document.body.appendChild(outer)
+  document.body.appendChild(inner)
+  inner.getBoundingClientRect()
+  requestAnimationFrame(() => {
+    inner.style.clipPath = `circle(${r}px at ${cx}px ${cy}px)`
+    outer.style.clipPath = `circle(${r + 80}px at ${cx}px ${cy}px)`
+  })
+  inner.addEventListener(
+    'transitionend',
+    () => {
+      outer.addEventListener('transitionend', () => outer.remove(), { once: true })
+      finish(inner, tgt)
+    },
+    { once: true }
+  )
 }
