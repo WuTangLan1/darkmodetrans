@@ -10,7 +10,7 @@ onMounted(initColorMode)
 </script>
 
 <template>
-  <section class="bg-gradient-to-r from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-500">
+  <section class="pt-20 bg-gradient-to-r from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-500">
     <div class="container mx-auto px-4 py-16 text-center">
       <h1 class="text-5xl font-extrabold mb-4 text-gray-900 dark:text-gray-100">Ultimate Fighting Championship Insights</h1>
       <p class="text-xl mb-12 text-gray-700 dark:text-gray-300">Dive into the latest news, history, and analysis from the world of UFC.</p>

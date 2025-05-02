@@ -33,12 +33,7 @@ watch(isDark, (val) => {
   <div
     class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
   >
-    <header class="bg-gray-100 dark:bg-gray-800 shadow">
-      <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <NuxtLink to="/" class="font-bold text-xl">UFC Insights</NuxtLink>
-      </nav>
-    </header>
-    <main class="flex-1 transition-colors duration-500">
+    <main class="flex-1">
       <NuxtPage />
     </main>
     <footer class="bg-gray-200 dark:bg-gray-800 text-center py-4">
