@@ -44,38 +44,15 @@ watch(isDark, (val) => {
       </p>
       <button
         @click="isDark = !isDark"
-        class="inline-flex items-center p-3 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300"
+        class="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold rounded-lg transition-colors duration-300"
       >
-        <svg
-          v-if="isDark"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 text-gray-900 dark:text-gray-100"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M20.354 15.354A9 9 0 118.646 3.646a9 9 0 0011.708 11.708z"
-          />
+        <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2zm0 13.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm8-4a.75.75 0 01.75.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75.75.75 0 01.75-.75zm-13.5 0a.75.75 0 01.75.75H5.75a.75.75 0 010 1.5H4.25a.75.75 0 01-.75-.75.75.75 0 01.75-.75zM15.53 4.47a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06L15.53 5.53a.75.75 0 010-1.06zm-11.06 11.06a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06L4.47 16.59a.75.75 0 010-1.06zm11.06 1.06a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM6.59 4.47a.75.75 0 010 1.06L5.53 6.59a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM10 6a4 4 0 100 8 4 4 0 000-8z"/>
         </svg>
-        <svg
-          v-else
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 text-gray-900 dark:text-gray-100"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 3v1m0 16v1m8.66-11h-1M4.34 11h-1m15.07 6.07l-.7-.7M6.34 7.34l-.7-.7m12.02 12.02l-.7-.7M6.34 16.66l-.7-.7"
-          />
+        <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M17.293 13.293a8 8 0 11-10.586-10.586 7 7 0 0010.586 10.586z"/>
         </svg>
+        <span class="ml-2">{{ isDark ? 'Light Mode' : 'Dark Mode' }}</span>
       </button>
     </div>
 
