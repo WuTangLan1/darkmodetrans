@@ -25,11 +25,18 @@ onMounted(initColorMode)
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <NuxtLink v-for="post in posts" :key="post.slug" :to="`/blog/${post.slug}`" class="group block rounded-xl overflow-hidden shadow-lg hover:shadow-2xl bg-white dark:bg-gray-800">
           <div class="h-48 overflow-hidden">
-            <img :src="'https://source.unsplash.com/collection/888146/400x300?sig=' + post.slug" alt="" class="w-full h-full object-cover group-hover:scale-110"/>
+            <div class="h-48 overflow-hidden">
+              <img
+                :src="isDark
+                  ? '/media/blog-header/darktheme.webp'
+                  : '/media/blog-header/lighttheme.webp'"
+                alt="Blog header image"
+                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+              />
+            </div>
           </div>
           <div class="p-6 flex flex-col">
             <h3 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{{ post.title }}</h3>
-            <span class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{ new Date(post.publishedAt).toLocaleDateString() }}</span>
             <p class="text-gray-700 dark:text-gray-300 flex-1">{{ post.excerpt }}</p>
             <div class="mt-4 text-blue-600 dark:text-blue-400 font-semibold flex items-center group-hover:translate-x-1">
               Read more

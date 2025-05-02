@@ -1,6 +1,7 @@
 <!-- pages/blog/index.vue -->
 <script setup lang="ts">
 import { posts } from '@/composables/usePosts'
+import { isDark } from '@/composables/useThemeToggle'
 </script>
 
 <template>
@@ -15,8 +16,8 @@ import { posts } from '@/composables/usePosts'
       >
         <div class="h-48 overflow-hidden">
           <img
-            :src="'https://source.unsplash.com/random/400x300?' + post.slug"
-            alt="Blog image"
+            :src="isDark ? '/media/blog-header/darktheme.webp' : '/media/blog-header/lighttheme.webp'"
+            alt=""
             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
           />
         </div>
@@ -26,7 +27,6 @@ import { posts } from '@/composables/usePosts'
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-10 4h10m2 4H6a2 2 0 01-2-2V7a2 2 0 012-2h1v2a1 1 0 001 1h10a1 1 0 001-1V5h1a2 2 0 012 2v12a2 2 0 01-2 2z"/>
             </svg>
-            <span>{{ new Date(post.publishedAt).toLocaleDateString() }}</span>
           </div>
           <p class="text-gray-700 dark:text-gray-300 mb-6">{{ post.excerpt }}</p>
           <div class="mt-auto flex items-center text-blue-600 dark:text-blue-400 font-semibold">
