@@ -35,10 +35,9 @@ function baseOverlay(btn: HTMLElement) {
   o.style.transform = `translateY(-${y}px)`
   ;(o.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   o.id = 'nuxt-theme-overlay'
-  o.style.cssText +=
-    'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path .6s ease-out'
+  o.style.cssText += 'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path .6s ease-out'
   o.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
-  return { r, o, cx, cy }
+  return { o, cx, cy }
 }
 function finish(o: HTMLElement, tgt: boolean) {
   const h = document.documentElement
@@ -71,41 +70,50 @@ export function toggleThemeWithDiamond(ev: MouseEvent) {
   const tgt = !isDark.value
   setMode(o, tgt)
   const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
-  const start = `${cx}px ${cy}px`
-  const end = `${cx}px ${cy - r}px, ${cx + r}px ${cy}px, ${cx}px ${cy + r}px, ${cx - r}px ${cy}px`
-  o.style.clipPath = `polygon(${start},${start},${start},${start})`
+  const s = `${cx}px ${cy}px`
+  const e = `${cx}px ${cy - r}px, ${cx + r}px ${cy}px, ${cx}px ${cy + r}px, ${cx - r}px ${cy}px`
+  o.style.clipPath = `polygon(${s},${s},${s},${s})`
   o.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
   o.style.color = 'var(--fg)'
   document.body.appendChild(o)
   o.getBoundingClientRect()
-  requestAnimationFrame(() => (o.style.clipPath = `polygon(${end})`))
+  requestAnimationFrame(() => (o.style.clipPath = `polygon(${e})`))
   o.addEventListener('transitionend', () => finish(o, tgt), { once: true })
 }
 export function toggleThemeWithRipple(ev: MouseEvent) {
   const btn = ev.currentTarget as HTMLElement
-  const { o: inner, cx, cy } = baseOverlay(btn)
+  const { o: core, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
-  setMode(inner, tgt)
+  setMode(core, tgt)
   const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
-  inner.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
-  inner.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
-  inner.style.color = 'var(--fg)'
-  const outer = document.createElement('div')
-  outer.style.cssText = `position:fixed;inset:0;pointer-events:none;z-index:9998;
-    clip-path:circle(0 at ${cx}px ${cy}px);transition:clip-path .8s ease-out;
-    background:linear-gradient(135deg,var(--bg-start),var(--bg-end))`
-  document.body.appendChild(outer)
-  document.body.appendChild(inner)
-  inner.getBoundingClientRect()
+  core.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
+  core.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
+  core.style.color = 'var(--fg)'
+  const ring = document.createElement('div')
+  const ring2 = document.createElement('div')
+  const baseCSS = (el: HTMLElement, delay: number) => {
+    el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${r * 2}px;height:${r * 2}px;margin-left:-${r}px;margin-top:-${r}px;border-radius:50%;border:2px solid var(--accent);opacity:.5;pointer-events:none;z-index:9998;transform:scale(0);transition:transform .8s ${delay}s cubic-bezier(.22,1,.36,1),opacity .8s ${delay}s`
+  }
+  baseCSS(ring, 0)
+  baseCSS(ring2, 0.12)
+  ring2.style.borderColor = 'var(--accent-hover)'
+  document.body.appendChild(ring)
+  document.body.appendChild(ring2)
+  document.body.appendChild(core)
+  core.getBoundingClientRect()
   requestAnimationFrame(() => {
-    inner.style.clipPath = `circle(${r}px at ${cx}px ${cy}px)`
-    outer.style.clipPath = `circle(${r + 80}px at ${cx}px ${cy}px)`
+    core.style.clipPath = `circle(${r + 40}px at ${cx}px ${cy}px)`
+    ring.style.transform = 'scale(1)'
+    ring2.style.transform = 'scale(1.15)'
+    ring.style.opacity = '0'
+    ring2.style.opacity = '0'
   })
-  inner.addEventListener(
+  core.addEventListener(
     'transitionend',
     () => {
-      outer.addEventListener('transitionend', () => outer.remove(), { once: true })
-      finish(inner, tgt)
+      ring.addEventListener('transitionend', () => ring.remove(), { once: true })
+      ring2.addEventListener('transitionend', () => ring2.remove(), { once: true })
+      finish(core, tgt)
     },
     { once: true }
   )
