@@ -133,26 +133,46 @@ onMounted(initColorMode)
     </div>
 
     <div v-if="posts.length" class="container mx-auto px-4 py-12">
-     <h2
-        class="flex items-center justify-center gap-2 text-3xl md:text-5xl font-heading font-extrabold mb-8 text-center
-               bg-gradient-to-r from-purple-400 via-pink-500 to-red-500
-               bg-clip-text text-transparent uppercase tracking-wide"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M8 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V6l-4-4H8zM9 4h4v3h3v9a1 1 0 01-1 1H9a1 1 0 01-1-1V4zm1 5h3v1H10V9zm0 2h3v1H10v-1z" />
-        </svg>
-        Here are the docs..
-      </h2>
+      <h2
+          class="flex items-center justify-center gap-2 text-3xl md:text-5xl font-heading font-extrabold mb-8 text-center
+                bg-gradient-to-r from-purple-400 via-pink-500 to-red-500
+                bg-clip-text text-transparent uppercase tracking-wide"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-12 h-12 flex-shrink-0"
+            viewBox="0 0 20 20"
+          >
+            <defs>
+              <linearGradient id="headingGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%"   stop-color="#a78bfa"/>  <!-- purple-400 -->
+                <stop offset="50%"  stop-color="#ec4899"/>  <!-- pink-500 -->
+                <stop offset="100%" stop-color="#f43f5e"/>  <!-- red-500 -->
+              </linearGradient>
+            </defs>
+            <path
+              fill="url(#headingGrad)"
+              d="M8 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V6l-4-4H8zm1 2h4v3h3v9H9V4zm1 5h3v1H10V9zm0 2h3v1H10v-1z"
+            />
+          </svg>
+          Here are the docs..
+        </h2>
+
+
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="post in posts"
           :key="post.slug"
           class="group relative flex flex-col rounded-xl overflow-hidden card shimmer-card"
         >
-          <div class="h-48 overflow-hidden">
-            <img src="/media/blog-header/lighttheme.png" class="w-full h-full object-cover block dark:hidden"/>
-            <img src="/media/blog-header/darktheme.png" class="w-full h-full object-cover hidden dark:block"/>
-          </div>
+        <div class="relative h-48 overflow-hidden">
+          <img src="/media/blog-header/lighttheme.png"
+              class="w-full h-full object-cover
+                      opacity-100 dark:opacity-0" />
+          <img src="/media/blog-header/darktheme.png"
+              class="absolute inset-0 w-full h-full object-cover
+                      opacity-0   dark:opacity-100" />
+        </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-2xl font-semibold mb-2">{{ post.title }}</h3>
             <p class="flex-1">{{ post.excerpt }}</p>

@@ -35,6 +35,7 @@ function baseOverlay(btn: HTMLElement) {
   o.style.transform = `translateY(-${y}px)`
   ;(o.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   o.id = 'nuxt-theme-overlay'
+  o.querySelectorAll('img').forEach(i => ((i as HTMLElement).style.opacity = '1'))
   o.style.cssText += 'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path 1.2s cubic-bezier(.22,1,.36,1)'
   o.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
   return { o, cx, cy }
