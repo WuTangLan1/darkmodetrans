@@ -6,8 +6,8 @@
 
 :root,
 .light {
-  --bg-start:#ffffff;
-  --bg-end:#e0f2fe;
+  --bg-start:#e4e3f1;
+  --bg-end:#95b1c4;
   --fg:#111827;
   --accent:#3b82f6;
   --accent-hover:#2563eb;
@@ -19,7 +19,7 @@
   --card-shadow:rgba(0,0,0,.05);
 }
 .dark{
-  --bg-start:#1c2845;
+  --bg-start:#0a0f38;
   --bg-end:#000000;
   --fg:#f9fafb;
   --accent:#22d3ee;
