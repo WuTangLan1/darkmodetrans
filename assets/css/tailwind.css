@@ -18,7 +18,7 @@
   --card-bg-hover:#f1f5f9;
   --card-shadow:rgba(0,0,0,.05);
 }
-.dark{
+.dark {
   --bg-start:#0a0f38;
   --bg-end:#000000;
   --fg:#f9fafb;
@@ -32,31 +32,45 @@
   --card-shadow:rgba(0,0,0,.5);
 }
 
-body{
-  background:linear-gradient(135deg,var(--bg-start),var(--bg-end));
-  color:var(--fg);
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  color: var(--fg);
 }
 
-@layer base{
-  a{color:var(--accent)}
-  a:hover{color:var(--accent-hover)}
-  p{line-height:1.7}
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+  }
+  a {
+    color: var(--accent);
+  }
+  a:hover {
+    color: var(--accent-hover);
+  }
+  p {
+    line-height: 1.7;
+  }
 }
 
-@layer components{
-  .btn-primary{@apply px-4 py-2 rounded-lg font-semibold;text-shadow:0 1px 1px rgba(0,0,0,.1);background-color:var(--btn-bg);color:var(--btn-text)}
-  .btn-primary:hover{background-color:var(--btn-bg-hover)}
+@layer components {
   .card {
-    @apply rounded-xl shadow-lg;
-    background-color: var(--card-bg);
+    @apply rounded-xl shadow-lg bg-[var(--card-bg)] transition-shadow duration-300;
     box-shadow: 0 4px 6px -1px var(--card-shadow), 0 2px 4px -2px var(--card-shadow);
   }
   .card:hover {
-    @apply -translate-y-1 shadow-2xl;
-    background-color: var(--card-bg-hover);
+    @apply shadow-2xl;
     box-shadow: 0 10px 15px -3px var(--card-shadow), 0 4px 6px -4px var(--card-shadow);
   }
-  h1,h2,h3,h4,h5,h6{color:var(--fg)}
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg font-semibold;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    text-shadow: 0 1px 1px rgba(0,0,0,.1);
+  }
+  .btn-primary:hover {
+    background-color: var(--btn-bg-hover);
+  }
   .btn-theme-toggle {
     @apply inline-flex items-center justify-center w-14 h-14 p-3 rounded-full
            bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-hover)]
@@ -65,5 +79,7 @@ body{
   .btn-theme-toggle:hover {
     @apply shadow-2xl -translate-y-1;
   }
-  code{@apply px-1 rounded bg-gray-100 dark:bg-gray-800}
+  code {
+    @apply px-1 rounded bg-gray-100 dark:bg-gray-800;
+  }
 }
