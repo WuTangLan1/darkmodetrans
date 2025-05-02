@@ -66,7 +66,13 @@ onMounted(initColorMode)
     </div>
 
     <div v-if="posts.length" class="container mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-6">Latest Posts</h2>
+      <h2
+        class="text-3xl md:text-5xl font-heading font-extrabold mb-8 text-center 
+              bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 
+              bg-clip-text text-transparent uppercase tracking-wide"
+      >
+        Here are the docs..
+      </h2>
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div v-for="post in posts" :key="post.slug" class="group relative flex flex-col rounded-xl overflow-hidden card shimmer-card">
           <div class="h-48 overflow-hidden">
