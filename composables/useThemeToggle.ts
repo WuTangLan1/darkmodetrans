@@ -35,7 +35,7 @@ function baseOverlay(btn: HTMLElement) {
   o.style.transform = `translateY(-${y}px)`
   ;(o.firstElementChild as HTMLElement | null)?.scrollTo(0, y)
   o.id = 'nuxt-theme-overlay'
-  o.style.cssText += 'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path .6s ease-out'
+  o.style.cssText += 'position:fixed;inset:0;pointer-events:none;z-index:9999;transition:clip-path 1.2s cubic-bezier(.22,1,.36,1)'
   o.querySelectorAll('*').forEach(e => ((e as HTMLElement).style.transition = 'none'))
   return { o, cx, cy }
 }
@@ -69,9 +69,12 @@ export function toggleThemeWithDiamond(ev: MouseEvent) {
   const { o, cx, cy } = baseOverlay(btn)
   const tgt = !isDark.value
   setMode(o, tgt)
-  const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
+
+  const diag = Math.hypot(innerWidth, innerHeight)
+  const d = diag
   const s = `${cx}px ${cy}px`
-  const e = `${cx}px ${cy - r}px, ${cx + r}px ${cy}px, ${cx}px ${cy + r}px, ${cx - r}px ${cy}px`
+  const e = `${cx}px ${cy - d}px, ${cx + d}px ${cy}px, ${cx}px ${cy + d}px, ${cx - d}px ${cy}px`
+
   o.style.clipPath = `polygon(${s},${s},${s},${s})`
   o.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
   o.style.color = 'var(--fg)'
@@ -109,7 +112,7 @@ export function toggleThemeWithRipple(ev: MouseEvent) {
   core.getBoundingClientRect()
   requestAnimationFrame(() => {
     core.style.clipPath = `circle(${r + 120}px at ${cx}px ${cy}px)`
-    rings.forEach((ring, idx) => {
+    rings.forEach(ring => {
       ring.style.transform = 'scale(1)'
       ring.style.opacity = '0'
     })
