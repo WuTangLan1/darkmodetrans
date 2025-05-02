@@ -86,33 +86,40 @@ export function toggleThemeWithRipple(ev: MouseEvent) {
   const tgt = !isDark.value
   setMode(core, tgt)
   const r = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy))
+  core.style.transition = 'clip-path 1.4s cubic-bezier(.22,1,.36,1)'
   core.style.clipPath = `circle(0 at ${cx}px ${cy}px)`
   core.style.background = 'linear-gradient(135deg,var(--bg-start),var(--bg-end))'
   core.style.color = 'var(--fg)'
-  const ring = document.createElement('div')
-  const ring2 = document.createElement('div')
-  const baseCSS = (el: HTMLElement, delay: number) => {
-    el.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${r * 2}px;height:${r * 2}px;margin-left:-${r}px;margin-top:-${r}px;border-radius:50%;border:2px solid var(--accent);opacity:.5;pointer-events:none;z-index:9998;transform:scale(0);transition:transform .8s ${delay}s cubic-bezier(.22,1,.36,1),opacity .8s ${delay}s`
+  const rings: HTMLElement[] = []
+  const steps = 3
+  for (let i = 0; i < steps; i++) {
+    const ring = document.createElement('div')
+    const delay = i * 0.15
+    const size = r * 2 + i * 120
+    ring.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;
+      margin-left:-${size / 2}px;margin-top:-${size / 2}px;border-radius:50%;
+      border:${4 - i}px solid var(--accent);opacity:.5;pointer-events:none;z-index:9998;
+      transform:scale(0);transition:transform 1.4s ${delay}s cubic-bezier(.22,1,.36,1),opacity 1.4s ${delay}s`
+    if (i === 1) ring.style.borderColor = 'var(--accent-hover)'
+    if (i === 2) ring.style.borderColor = 'var(--btn-bg-hover)'
+    rings.push(ring)
+    document.body.appendChild(ring)
   }
-  baseCSS(ring, 0)
-  baseCSS(ring2, 0.12)
-  ring2.style.borderColor = 'var(--accent-hover)'
-  document.body.appendChild(ring)
-  document.body.appendChild(ring2)
   document.body.appendChild(core)
   core.getBoundingClientRect()
   requestAnimationFrame(() => {
-    core.style.clipPath = `circle(${r + 40}px at ${cx}px ${cy}px)`
-    ring.style.transform = 'scale(1)'
-    ring2.style.transform = 'scale(1.15)'
-    ring.style.opacity = '0'
-    ring2.style.opacity = '0'
+    core.style.clipPath = `circle(${r + 120}px at ${cx}px ${cy}px)`
+    rings.forEach((ring, idx) => {
+      ring.style.transform = 'scale(1)'
+      ring.style.opacity = '0'
+    })
   })
   core.addEventListener(
     'transitionend',
     () => {
-      ring.addEventListener('transitionend', () => ring.remove(), { once: true })
-      ring2.addEventListener('transitionend', () => ring2.remove(), { once: true })
+      rings.forEach(ring =>
+        ring.addEventListener('transitionend', () => ring.remove(), { once: true })
+      )
       finish(core, tgt)
     },
     { once: true }
