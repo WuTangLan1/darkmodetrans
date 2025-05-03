@@ -1,4 +1,5 @@
-<!-- pages/docs/[slug].vue -->
+<!-- pages\docs\[slug].vue -->
+
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { navigateTo } from '#app'
@@ -39,6 +40,27 @@ onMounted(async () => {
 
 <template>
   <section v-if="post" class="container mx-auto px-4 py-12">
+    <NuxtLink
+      to="/"
+      class="btn-primary inline-flex items-center mb-6"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      <span>Back to Home</span>
+    </NuxtLink>
+
     <h1 ref="titleRef" class="text-4xl font-extrabold mb-4">
       {{ post.title }}
     </h1>
