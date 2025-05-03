@@ -129,10 +129,10 @@ onMounted(initColorMode)
         </div>
       </div>
       <h1 class="text-5xl font-extrabold my-4">The Ultimate Guide for Theme Transitions with TailwindCSS</h1>
-      <p class="text-l mb-12">This website provides substantial value for different theme transitions to enhance the UX. The three buttons above offer realistic and actionable transitions users can incorporate to enhance the UX for their website. Please read the docs for each specific transition's explanation and code, or visit the project on github @ https://github.com/WuTangLan1/darkmodetrans</p>
+      <p class="text-l mb-6">This website provides substantial value for different theme transitions to enhance the UX. The three buttons above offer realistic and actionable transitions users can incorporate to enhance the UX for their website. Please read the docs for each specific transition's explanation and code, or visit the project on github @ https://github.com/WuTangLan1/darkmodetrans</p>
     </div>
 
-    <div v-if="posts.length" class="container mx-auto px-4 py-12">
+    <div v-if="posts.length" class="container mx-auto px-4 pb-20">
       <h1
           class="flex flex-col sm:flex-row items-center justify-center gap-2 
                  text-5xl font-extrabold my-4 mb-8 tracking-wide"
