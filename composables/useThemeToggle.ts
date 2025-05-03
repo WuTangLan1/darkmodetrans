@@ -24,14 +24,14 @@ function freeze() {
 
 export function initColorMode() {
   if (typeof window === 'undefined') return
-  const h = document.documentElement
-  const r = document.getElementById('__nuxt')
-  if (!r) return
-  const s = localStorage.getItem('color-mode')
-  const d = s ? s === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
-  setMode(h, d)
-  setMode(r, d)
-  isDark.value = d
+
+  // ← FORCE LIGHT ON PAGE LOAD
+  localStorage.setItem('color-mode', 'light')
+  document.documentElement.classList.remove('dark')
+
+  // rest of your existing logic (you can now skip prefers-color-scheme and stored dark)
+  document.documentElement.classList.add('light')
+  isDark.value = false
 }
 
 function baseOverlay(btn: HTMLElement) {
