@@ -1,11 +1,6 @@
 <!-- components/OverlayLoad.vue -->
-<template>
-    <div class="fixed inset-0 overlay-load z-[9999]">
-      <canvas ref="canvasRef" class="w-full h-full block"></canvas>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
+
+<script setup lang="ts">
   import { ref, onMounted, onBeforeUnmount } from 'vue'
   import {
     Scene,
@@ -29,13 +24,15 @@
   const group = new Group()
   
   function buildPenroseLikeShape() {
-    const beamLength = 2
-    const beamThickness = 0.32
+    const beamLength = 1.5
+    const beamThickness = 0.24
     const beamGeo = new BoxGeometry(beamLength, beamThickness, beamThickness)
     const mat = new MeshStandardMaterial({
-      color: new Color('#5ab8ff'),
-      roughness: 0.25,
-      metalness: 0.4
+      color: new Color('#82cfff'),
+      emissive: new Color('#1a6eff'),
+      emissiveIntensity: 0.35,
+      roughness: 0.2,
+      metalness: 0.45
     })
   
     const a = Math.PI / 3
@@ -53,7 +50,7 @@
     b3.rotation.z = -a
   
     group.add(b1, b2, b3)
-    group.scale.set(0.6, 0.6, 0.6)
+    group.scale.set(0.4, 0.4, 0.4)
   }
   
   function initThree() {
@@ -65,7 +62,7 @@
       0.1,
       1000
     )
-    camera.position.set(0, 0, 4)
+    camera.position.set(0, 0, 3.5)
     renderer = new WebGLRenderer({
       canvas: canvasRef.value,
       alpha: true,
@@ -74,9 +71,9 @@
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
   
-    const amb = new AmbientLight(0x202020, 1.4)
-    const point = new PointLight(0xffffff, 1.6, 10, 2)
-    point.position.set(3, 4, 5)
+    const amb = new AmbientLight(0x141414, 1.6)
+    const point = new PointLight(0x7bd7ff, 2.2, 12, 1.8)
+    point.position.set(2, 3, 4)
     scene.add(amb, point)
   
     buildPenroseLikeShape()
@@ -93,8 +90,8 @@
   
   function animate() {
     const t = performance.now() * 0.001
-    group.rotation.x = t * 0.4
-    group.rotation.y = t * 0.6
+    group.rotation.x = t * 0.45
+    group.rotation.y = t * 0.65
     renderer.render(scene, camera)
     frameId = requestAnimationFrame(animate)
   }
@@ -114,12 +111,19 @@
       ;(mesh.material as MeshStandardMaterial).dispose()
     })
   })
-  </script>
+</script>
   
-  <style scoped>
+
+<template>
+    <div class="fixed inset-0 overlay-load z-[9999]">
+      <canvas ref="canvasRef" class="w-full h-full block"></canvas>
+    </div>
+</template>
+
+<style scoped>
   .overlay-load {
     backdrop-filter: blur(10px);
-    background: radial-gradient(circle at 50% 50%, #0a0a15 0%, #111733 50%, #090d1f 100%);
+    background: radial-gradient(circle at 50% 50%, #050510 0%, #0c1127 45%, #050510 100%);
     animation: gradientPulse 6s linear infinite;
   }
   @keyframes gradientPulse {
@@ -133,5 +137,5 @@
       filter: hue-rotate(360deg);
     }
   }
-  </style>
+</style>
   
