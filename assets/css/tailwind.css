@@ -10,6 +10,8 @@
 .light {
   --bg-start:#ffffff;
   --bg-end:#edeaf1;
+  --bg-header-start:#ef8cde;
+  --bg-header-end:#cba2fa;
   --fg:#111827;
   --accent:#3b82f6;
   --accent-hover:#2563eb;
@@ -23,6 +25,8 @@
 .dark {
   --bg-start:#0a0f38;
   --bg-end:#000000;
+  --bg-header-start:#6058f0;
+  --bg-header-end:#c466e6;
   --fg:#f9fafb;
   --accent:#22d3ee;
   --accent-hover:#06b6d4;

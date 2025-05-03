@@ -14,9 +14,9 @@ onMounted(initColorMode)
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-hover)] text-[var(--btn-text)]">
+  <header class="sticky top-0 z-50 bg-gradient-to-tr from-[var(--bg-header-start)] to-[var(--bg-header-end)] text-[var(--fg)]">
     <div class="container mx-auto px-4 py-4">
-      <h1 class="text-center text-2xl font-bold">TailwindCSS Theme Transitions</h1>
+      <h1 class="text-center text-3xl font-bold">TailwindCSS Theme Transitions</h1>
     </div>
   </header>
 
