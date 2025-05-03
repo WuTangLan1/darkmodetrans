@@ -13,14 +13,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <transition name="fade" mode="out-in" v-if="showOverlay" key="overlay">
-    <OverlayLoad />
-  </transition>
-  <transition name="fade" mode="out-in" v-else key="layout">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </transition>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+
+  <ClientOnly>
+    <transition name="fade">
+      <OverlayLoad v-if="showOverlay" />
+    </transition>
+  </ClientOnly>
 </template>
 
 <style scoped>
