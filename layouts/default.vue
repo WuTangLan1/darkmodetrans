@@ -37,7 +37,7 @@ watch(isDark, (val) => {
       <NuxtPage />
     </main>
     <footer class="bg-gray-200 dark:bg-gray-800 text-center py-4">
-      <p class="text-sm">© 2025 UFC Blog</p>
+      <p class="text-sm">© 2025 Tailwindcss Theme Transitions Blog</p>
     </footer>
   </div>
 </template>
