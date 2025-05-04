@@ -69,7 +69,6 @@ body {
     @apply -translate-y-2 shadow-2xl;
     box-shadow: 0 10px 15px -3px var(--card-shadow), 0 4px 6px -4px var(--card-shadow);
   }
-
   .shimmer-card {
     @apply relative overflow-hidden;
   }
@@ -85,15 +84,15 @@ body {
     opacity: 1;
     background-position: 200% 0;
   }
-
   .btn-primary {
-    @apply px-4 py-2 rounded-lg font-semibold;
+    @apply px-4 py-2 rounded-lg font-semibold transform transition duration-500 ease-out;
     background-color: var(--btn-bg);
     color: var(--btn-text);
     text-shadow: 0 1px 1px rgba(0,0,0,.1);
   }
   .btn-primary:hover {
-    background-color: var(--btn-bg-hover);
+    @apply -translate-y-2 shadow-2xl;
+    box-shadow: 0 10px 15px -3px var(--card-shadow), 0 4px 6px -4px var(--card-shadow);
   }
 
   .btn-theme-toggle {
