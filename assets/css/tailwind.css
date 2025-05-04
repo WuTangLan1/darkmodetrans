@@ -1,6 +1,7 @@
+/* assets\css\tailwind.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -61,13 +62,30 @@ body {
 
 @layer components {
   .card {
-    @apply rounded-xl shadow-lg bg-[var(--card-bg)] transition-shadow duration-300;
+    @apply rounded-xl bg-[var(--card-bg)] shadow-lg transform transition duration-500 ease-out;
     box-shadow: 0 4px 6px -1px var(--card-shadow), 0 2px 4px -2px var(--card-shadow);
   }
   .card:hover {
-    @apply shadow-2xl;
+    @apply -translate-y-2 shadow-2xl;
     box-shadow: 0 10px 15px -3px var(--card-shadow), 0 4px 6px -4px var(--card-shadow);
   }
+
+  .shimmer-card {
+    @apply relative overflow-hidden;
+  }
+  .shimmer-card::before {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, background-position 1s ease-in-out;
+  }
+  .shimmer-card:hover::before {
+    opacity: 1;
+    background-position: 200% 0;
+  }
+
   .btn-primary {
     @apply px-4 py-2 rounded-lg font-semibold;
     background-color: var(--btn-bg);
@@ -77,6 +95,7 @@ body {
   .btn-primary:hover {
     background-color: var(--btn-bg-hover);
   }
+
   .btn-theme-toggle {
     @apply inline-flex items-center justify-center w-14 h-14 p-3 rounded-full
            bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-hover)]
@@ -85,6 +104,7 @@ body {
   .btn-theme-toggle:hover {
     @apply shadow-2xl -translate-y-1;
   }
+
   code {
     @apply px-1 rounded bg-gray-100 dark:bg-gray-800;
   }
