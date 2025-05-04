@@ -23,7 +23,7 @@ onMounted(async () => {
   if (titleRef.value) lines.push(titleRef.value)
   if (bodyRef.value) {
     bodyRef.value
-      .querySelectorAll('p, h2, h3, h4, li, img, pre, blockquote, table, code')
+      .querySelectorAll('p, h2, h3, h4, btn, li, img, pre, blockquote, table, code')
       .forEach(el => lines.push(el as HTMLElement))
   }
 
