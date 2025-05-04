@@ -13,15 +13,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-
   <ClientOnly>
-    <transition name="fade">
-      <OverlayLoad v-if="showOverlay" />
+    <template #placeholder>
+      <div class="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center">
+        <div class="w-16 h-16 bg-blacks rounded-full animate-ping"></div>
+      </div>
+    </template>
+
+    <transition name="fade" mode="out-in">
+      <OverlayLoad v-if="showOverlay" key="overlay" />
     </transition>
   </ClientOnly>
+
+  <div v-show="!showOverlay">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
+
+  <div v-show="!showOverlay">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <style scoped>
