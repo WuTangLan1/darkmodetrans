@@ -1,3 +1,5 @@
+<!-- pages\docs\[slug].vue -->
+
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { navigateTo } from '#app'
@@ -49,7 +51,6 @@ onMounted(async () => {
         to="/"
         class="btn-primary inline-flex items-center space-x-2 px-5 py-2 hover:-translate-y-0.5 transition transform"
       >
-        <span>Home</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="w-5 h-5"
@@ -61,9 +62,10 @@ onMounted(async () => {
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M5 12h14M12 5l7 7-7 7"
+            d="M19 12H5M12 5l-7 7 7 7"
           />
         </svg>
+        <span>Home</span>
       </NuxtLink>
     </div>
     <div
